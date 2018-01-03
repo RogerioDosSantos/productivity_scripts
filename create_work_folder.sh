@@ -30,13 +30,13 @@ echo "- Creating work folder"
 cd "${call_dir}"
 mkdir ./${config_folder_name}
 cd ./${config_folder_name}
-touch ./README.md
+echo "# ${config_folder_name}" > ./README.md
 
 echo "- Creating doc folder"
 mkdir ./doc
 mkdir ./doc/resource
 mkdir ./doc/src
-echo "${config_folder_name} Documentation" > ./doc/src/index.md
+echo "# ${config_folder_name} Documentation" > ./doc/src/index.md
 
 echo "- Initializing git"
 git init
