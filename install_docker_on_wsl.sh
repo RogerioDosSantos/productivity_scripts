@@ -37,27 +37,34 @@ apt-get install -y \
     curl \
     software-properties-common
 
-echo "Add Docker's official GPG key."
+echo "- Add Docker's official GPG key."
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
-echo "Verify the fingerprint."
+echo "- Verify the fingerprint."
 apt-key fingerprint 0EBFCD88
 
-echo "Pick the release channel."
+echo "- Pick the release channel."
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) ${config_docker_channel}"
 
-echo " Update the apt package index."
+echo "- Update the apt package index."
 apt-get update
 
-echo " Install the latest version of Docker CE."
+echo "- Install the latest version of Docker CE."
 apt-get install -y docker-ce
 
-echo " Allow your user to access the Docker CLI without needing root."
+echo "- Allow your user to access the Docker CLI without needing root."
 usermod -aG docker $USER
 
-echo " Install Docker Compose."
+echo "- Install Docker Compose."
 curl -L https://github.com/docker/compose/releases/download/${config_docker_compose_version}/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose &&
 chmod +x /usr/local/bin/docker-compose
+
+echo "- Additional intructions"
+echo " Add the following commands on your ~/.bashrc :"
+echo "    # configure docker"
+echo "    export DOCKER_HOST=tcp://192.168.99.100:2376"
+echo "    export DOCKER_CERT_PATH=/mnt/c/Users/roger.santos/.docker/machine/certs"
+echo "    export DOCKER_TLS_VERIFY=1"
 
 # Setup - Return to the called directory
 cd "${call_dir}"
