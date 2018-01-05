@@ -3,8 +3,8 @@
 # Configuration
 echo "* $(basename "$0")"
 echo "- Configuration:"
-# config_xxx="$1"
-# echo "1- config_xxx: ${config_xxx}"
+if [ -z "$1" ]; then config_xxx="default_parameter"; else config_xxx="$1"; fi 
+echo "1- config_xxx: ${config_xxx}"
 
 # Setup - Go to the directory where the bash file is
 call_dir=$(pwd)
