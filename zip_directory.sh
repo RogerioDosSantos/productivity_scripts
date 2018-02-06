@@ -28,7 +28,7 @@ if [[ -z "${config_destination}" ]]; then
 fi
 
 echo "- Compressing folder ${config_source} to ${config_destination}"
-zip -r9 "${config_destination}" *
+zip --encrypt -r9 "${config_destination}" *
 echo "- File Created: ${config_destination}"
 
 # Setup - Return to the called directory
