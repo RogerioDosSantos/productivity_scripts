@@ -34,9 +34,10 @@ echo "# ${config_folder_name}" > ./README.md
 
 echo "- Creating doc folder"
 mkdir ./doc
-mkdir ./doc/resource
+mkdir ./doc/resources
 mkdir ./doc/src
 echo "# ${config_folder_name} Documentation" > ./doc/src/index.md
+cp "${bash_dir}/templates/pandoc/wiki_style.css" "./doc/resources/style.css"
 
 echo "- Initializing git"
 git init
