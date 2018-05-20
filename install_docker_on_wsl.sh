@@ -3,9 +3,9 @@
 # Configuration
 echo "* $(basename "$0")"
 echo "- Configuration:"
-if [ -z "$1" ]; then config_docker_channel="edge"; else config_docker_channel="$1"; fi 
+if [ -z "$1" ]; then config_docker_channel="edge"; else config_docker_channel="$1"; fi
 echo "1- config_docker_channel: ${config_docker_channel}"
-if [ -z "$2" ]; then config_docker_compose_version="1.16.1"; else config_docker_compose_version="$2"; fi 
+if [ -z "$2" ]; then config_docker_compose_version="1.16.1"; else config_docker_compose_version="$2"; fi
 echo "2- config_docker_compose_version: ${config_docker_compose_version}"
 
 # Setup - Go to the directory where the bash file is
@@ -63,7 +63,7 @@ echo "- Additional intructions"
 echo " Add the following commands on your ~/.bashrc :"
 echo "    # configure docker"
 echo "    export DOCKER_HOST=tcp://192.168.99.100:2376"
-echo "    export DOCKER_CERT_PATH=/mnt/c/Users/roger.santos/.docker/machine/certs"
+echo "    export DOCKER_CERT_PATH=/mnt/c/Users/roger/.docker/machine/certs"
 echo "    export DOCKER_TLS_VERIFY=1"
 
 # Setup - Return to the called directory
