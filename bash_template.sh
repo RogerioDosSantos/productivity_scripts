@@ -33,7 +33,8 @@ DisplayHelpAndExit()
 {
 	echo "Commands Help"
   echo "--help (-h) : Display this command help"
-  echo "--xxx (-n) <name>: Name of the Workspace (Default: ${config_xxx})"
+  echo "--xxx (-x) <name>: Config with parameter (Default: ${config_xxx})"
+  echo "--yyy (-y) : Config without parameter"
   exit 1
 }
 
@@ -41,13 +42,19 @@ GetConfiguration()
 {
   echo "* $(basename "$0")"
   echo "- Configuration:"
-  config_xxx="workspace"
+  config_xxx="default_value_x"
+  config_yyy="0"
   while [[ $# != 0 ]]; do
       case $1 in
-          --xxx|-n)
+          --xxx|-x)
             config_xxx="$2"
             echo "  xxx = ${config_xxx}"
             shift 2
+            ;;
+          --yyy|-y)
+            config_yyy="1"
+            echo "  yyy = ${config_yyy}"
+            shift 1
             ;;
           --)
               shift
