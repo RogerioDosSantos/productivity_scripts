@@ -32,62 +32,50 @@ End()
 DisplayHelpAndExit()
 {
 	echo "Commands Help"
-  for config in "${configs[@]}"; do
-		IFS=";" read -r -a options <<< "${config}"
-    echo "--${options[0]} or -${options[1]} : ${options[3]}"
-	done
+  echo "--help (-h) : Display this command help"
+  echo "--xxx (-n) <name>: Name of the Workspace (Default: ${config_xxx})"
   exit 1
-}
-
-XXX()
-{
-	echo "${config_xxx}"
 }
 
 GetConfiguration()
 {
-  configs[0]="xxx;x;default_value_x;help_description_x"
-  configs[1]="yyy;y;default_value_y;help_description_y"
-
-  # Set values from user
-  commands=()
-  shortcuts=()
-  variables=()
-  for config in "${configs[@]}"; do
-		IFS=";" read -r -a options <<< "${config}"
-    commands+=("${options[0]}")
-    shortcuts+=("${options[1]}")
-    variable="config_${options[0]}"
-    variables+=("${variable}")
-    typeset $variable="${options[2]}"
-	done
-
-  if [ "$1" == "" ]; then DisplayHelpAndExit; fi
-  while [ "$1" != "" ]; do
-    for index in "${!commands[@]}"; do
-      if [ "$1" == "--${commands[index]}" ] || [ "$1" == "-${shortcuts[index]}" ]; then
-        shift
-        if [ -z "$1" ]; then
-          DisplayHelpAndExit
-        else
-          variable="config_${commands[index]}"
-          typeset $variable="$1"
-        fi
-        break
-      fi
-    done
-  shift
-done
-
-  # Display Configuration
   echo "* $(basename "$0")"
   echo "- Configuration:"
-  for index in "${!commands[@]}"; do
-    variable="config_${commands[index]}"
-    echo "  ${commands[index]} = ${!variable}"
+  config_xxx="workspace"
+  while [[ $# != 0 ]]; do
+      case $1 in
+          --xxx|-n)
+            config_xxx="$2"
+            echo "  xxx = ${config_xxx}"
+            shift 2
+            ;;
+          --)
+              shift
+              break
+              ;;
+          --help|-h)
+              DisplayHelpAndExit
+              exit
+              ;;
+          -*)
+              echo "Unknown option $1"
+              DisplayHelpAndExit
+              exit
+              ;;
+          *)
+              break
+              ;;
+      esac
   done
-
 }
 
+MainFunction()
+{
+  echo "- TODO: Add logic here"
+}
+
+Init
 GetConfiguration "$@"
+MainFunction
+End
 
