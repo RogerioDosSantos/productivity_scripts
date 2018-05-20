@@ -40,7 +40,7 @@ GetConfiguration()
 {
   echo "* $(basename "$0")"
   echo "- Configuration:"
-  config_workspace_name="workspace"
+  config_workspace_name="$(date +'%H-%M-%S')"
   config_left_size_percentage="30"
   config_left_program_command="vim ~/wiki/docs/src/index.md"
   config_down_size_percentage="30"
