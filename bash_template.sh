@@ -51,7 +51,7 @@ DisplayHelp()
   echo " "
   echo "${g_script_name} Help"
   echo " "
-  echo "${g_script_name} <command> [<command_options>]"
+  echo "${g_script_name} --<command> [<command_options>]"
   echo " "
   echo "- Commands:"
   echo "--help (h) : Display this command help"
