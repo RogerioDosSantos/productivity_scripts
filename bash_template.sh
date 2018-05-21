@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Exit on any non-zero status.
-trap 'exit' ERR
-set -E
 
 # Functions
 
@@ -35,8 +32,17 @@ Init()
 
 End()
 {
-  # Setup - Return to the called directory
+  Log "info" "5" "Returning to caller directory" "${g_caller_dir}"
   cd "${g_caller_dir}"
+}
+
+ErrorHandler()
+{
+  # Usage: ErrorHandler <last_line>
+  local last_line=$1
+  Log "error" "1" "Last line executed" "${last_line}"
+  End
+  exit 1
 }
 
 ScriptDetail()
@@ -109,9 +115,13 @@ MainFunction()
 }
 
 # Main
+
+set -E
+trap 'ErrorHandler $LINENO' ERR
+
 Init
 GetConfiguration "$@"
 ScriptDetail
 MainFunction
-End
+End 0
 
