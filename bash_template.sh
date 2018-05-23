@@ -118,5 +118,5 @@ Init
 GetConfiguration "$@"
 ScriptDetail
 MainFunction
-End 0
+End 
 
