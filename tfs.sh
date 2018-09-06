@@ -71,7 +71,7 @@ Main()
               exit
               ;;
           --checkout|-co)
-              tfs::Checkout "$2"
+              tfs::CheckoutCommand "$2"
               break
             ;;
           -*)
