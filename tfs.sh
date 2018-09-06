@@ -1,8 +1,5 @@
 #!/bin/bash
 
-source ./_log.sh
-source ./_tfs.sh
-
 # Functions
 
 Init()
@@ -12,6 +9,10 @@ Init()
   g_caller_dir=$(pwd)
   cd "$(dirname "$0")"
   g_script_dir=$(pwd)
+
+  # Load dependencies
+  source ./_log.sh
+  source ./_tfs.sh
 
   log::Init
 }
