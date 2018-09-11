@@ -8,6 +8,7 @@ strings_tests::CountCharacters()
   strings::CountCharacters ",,,,,,,,," "," | qa::AreEqual "9" "Could not count the characters properly"
   strings::CountCharacters "---------" "-" | qa::AreEqual "9" "Could not count the characters properly"
   strings::CountCharacters 'm_szUnit, sizeof(m_szUnit)/sizeof(TCHAR), pszUnit != NULL ? pszUnit : _T(""), MAX_UNIT' "," | qa::AreEqual "3" "Could not count the characters properly"
+  strings::CountCharacters 'UnitNew, szBuf != NULL ? szBuf : _T(""), MAX_UNIT' "," | qa::AreEqual "2" "Could not count the characters properly"
 }
 
 
