@@ -11,7 +11,12 @@ tfs::program_path()
     return 0
   fi
 
+  # local short_program_path="${tfs__program_path:-"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\tf.exe"}"
+  # short_program_path=$(wsl::GetShortNamePath "${short_program_path}")
+  # echo "${short_program_path}"
+  
   echo "${tfs__program_path:-"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\tf.exe"}"
+  return 0
 }
 
 tfs::Checkout()
@@ -22,10 +27,11 @@ tfs::Checkout()
 
   local file_name="$(shell::GetFileName "${in_file_path}")"
   local file_path="$(shell::NormalizePath "${in_file_path}")"
-  local windows_file_path="$(shell::ConvertLinuxPathToWindowsPath "${file_path}")"
+  local windows_file_path="$(wsl::ConvertLinuxPathToWindowsPath "${file_path}")"
   log::Log "info" "5" "Windows File Path" "${windows_file_path}"
 
-  local result="$(wsl::Execute "$(tfs::program_path)" "vc" "checkout" "${windows_file_path}" | grep "${file_name}" | tr -d '[:space:]')"
+  local result="$(wsl::Execute "_exec.bat" "${windows_file_path}" | grep "${file_name}" | tr -d '[:space:]')"
+  log::Log "info" "5" "Checkout result" "${result}"
   if [ "${result}" == "${file_name}" ]; then
     echo "true"
     return 0

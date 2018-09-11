@@ -18,12 +18,3 @@ shell::NormalizePath()
   echo "${real_path}"
 }
 
-shell::ConvertLinuxPathToWindowsPath()
-{
-  # Usage: ConvertLinuxPathToWindowsPath <in:path>
-  local in_path=$1
-  in_path=${in_path/\/mnt\//}
-  in_path=${in_path/\//:\/}
-  echo "${in_path}"
-  return 0
-}
