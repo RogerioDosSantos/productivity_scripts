@@ -43,6 +43,7 @@ DisplayHelp()
   echo "--log_show (-ls) : Show log"
   echo "--log_level (-ll) <level>: Define the Log Level (Default: $(log::level)"
   echo "--checkout (-co) <file_path>: Checkout a file."
+  echo "--history (-hs) <file_path>: Display the history of a file."
 
   echo " "
 }
@@ -75,6 +76,10 @@ Main()
               tfs::CheckoutCommand "$2"
               break
             ;;
+          --history|-hs)
+              tfs::History "$2"
+              break
+            ;;
           -*)
               log::Log "error" "1" "Unknown option" "$1"
               DisplayHelp
@@ -94,5 +99,5 @@ trap 'ErrorHandler $LINENO' ERR
 
 Init
 Main "$@"
-End 
+End
 

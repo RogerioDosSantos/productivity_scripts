@@ -30,7 +30,7 @@ tfs::Checkout()
   local windows_file_path="$(wsl::ConvertLinuxPathToWindowsPath "${file_path}")"
   log::Log "info" "5" "Windows File Path" "${windows_file_path}"
 
-  local result="$(wsl::Execute "_exec.bat" "${windows_file_path}" | grep "${file_name}" | tr -d '[:space:]')"
+  local result="$(wsl::Execute "_tfs.bat" -co "${windows_file_path}" | grep "${file_name}" | tr -d '[:space:]')"
   log::Log "info" "5" "Checkout result" "${result}"
   if [ "${result}" == "${file_name}" ]; then
     echo "true"
@@ -51,6 +51,21 @@ tfs::CheckoutCommand()
     echo "${in_file_path} - checkout failure"
   fi
 
+  return 0
+}
+
+tfs::History()
+{
+  #Usage: History <in:file_path>
+  local in_file_path="$1"
+  log::Log "info" "5" "Getting history of the following file" "${in_file_path}"
+
+  local file_name="$(shell::GetFileName "${in_file_path}")"
+  local file_path="$(shell::NormalizePath "${in_file_path}")"
+  local windows_file_path="$(wsl::ConvertLinuxPathToWindowsPath "${file_path}")"
+  log::Log "info" "5" "Windows File Path" "${windows_file_path}"
+
+  wsl::Execute "_tfs.bat" -hs "${windows_file_path}"
   return 0
 }
 
