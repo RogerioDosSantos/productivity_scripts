@@ -44,6 +44,8 @@ DisplayHelp()
   echo "--log_show (-ls) : Show log"
   echo "--log_level (-ll) <level>: Define the Log Level (Default: $(log::level)"
   echo "--count_char (-cc) <text_to_search> <character_to_count>: Count the amount of characters into a text."
+  echo "--is_integer (-ii) <text>: Check if a text is integer."
+  echo "--is_number (-in) <text>: Check if a text is a number."
 
   echo " "
 }
@@ -74,6 +76,14 @@ Main()
               ;;
           --count_char|-cc)
               strings::CountCharacters "$2" "$3"
+              break
+            ;;
+          --is_integer|-ii)
+              strings::IsInteger "$2"
+              break
+            ;;
+          --is_number|-in)
+              strings::IsNumber "$2"
               break
             ;;
           -*)
