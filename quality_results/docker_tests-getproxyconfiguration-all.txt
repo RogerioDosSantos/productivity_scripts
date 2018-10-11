@@ -1,0 +1,1 @@
+--env http_proxy=http://http_proxy.com:8080 --env https_proxy=http://https_proxy.com:8080 --env ftp_proxy=http://ftp_proxy.com:8080 --env no_proxy=http://no_proxy.com:8080
