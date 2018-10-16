@@ -43,6 +43,7 @@ DisplayHelp()
   echo "--log_show (-ls) : Show log"
   echo "--log_level (-ll) <level>: Define the Log Level (Default: $(log::level))"
   echo "--jenkins_server_start (-js) : Start Jenkins Server"
+  echo "--conan_repository_server_start (-cs) : Start Conan Package Manager Repository (JFrog Artifactory Server)"
 
   echo " "
 }
@@ -73,6 +74,10 @@ Main()
               ;;
           --jenkins_server_start|-js)
               devops::StartJenkinsServerCommand
+              break
+            ;;
+          --conan_repository_server_start|-cs)
+              devops::StartConanRepositoryCommand
               break
             ;;
           -*)
