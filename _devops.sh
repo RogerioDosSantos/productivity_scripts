@@ -85,7 +85,7 @@ devops::StartConanRepositoryCommand()
   #Usage: StartConanRepositoryCommand
 
   echo "Conan Package Manager Repository (JFrog Artifactory Server)..."
-  local result="$(devops::StartJenkinsServer)"
+  local result="$(devops::StartConanRepository)"
   if [ "${result}" != "true" ]; then
     echo "- Could not start Conan Package Manager Repository (JFrog Artifactory Server)!"
     return 0
