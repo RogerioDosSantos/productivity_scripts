@@ -10,4 +10,9 @@ if "%1%"=="-hs" (
   goto :eof
 )
 
+if "%1%"=="-cl" (
+  "C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/IDE/tf.exe" vc status /collection:"%2" /recursive
+  goto :eof
+)
+
 echo The command %1 is not available

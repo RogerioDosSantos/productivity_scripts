@@ -44,6 +44,7 @@ DisplayHelp()
   echo "--log_level (-ll) <level>: Define the Log Level (Default: $(log::level)"
   echo "--checkout (-co) <file_path>: Checkout a file."
   echo "--history (-hs) <file_path>: Display the history of a file."
+  echo "--checkout_list (-cl) <collection_url>: Show a list of files that are checkout. (Default: -cl http://swtfsiws.dev.wonderware.com:8080/tfs/InduSoft/)"
 
   echo " "
 }
@@ -78,6 +79,10 @@ Main()
             ;;
           --history|-hs)
               tfs::History "$2"
+              break
+            ;;
+          --checkout_list|-cl)
+              tfs::CheckoutList "${2:-http://swtfsiws.dev.wonderware.com:8080/tfs/InduSoft/}"
               break
             ;;
           -*)

@@ -69,3 +69,13 @@ tfs::History()
   return 0
 }
 
+tfs::CheckoutList()
+{
+  #Usage: CheckoutList <collection_url>
+  local in_collection_url=$1
+  log::Log "info" "5" "List of checkout files" ""
+
+  wsl::Execute "_tfs.bat" -cl "${in_collection_url}"
+}
+
+
