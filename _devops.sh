@@ -1,6 +1,14 @@
 
 source ./_log.sh
 source ./_docker.sh
+source ./_wsl.sh
+
+devops::SetupWSL()
+{
+  # Usage: SetupWSL
+
+  wsl::PrepareDocker
+}
 
 devops::StartJenkinsServer()
 {

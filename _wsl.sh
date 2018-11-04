@@ -1,6 +1,20 @@
 
 source ./_log.sh
 
+wsl::PrepareDocker()
+{
+  # Usage: PrepareDocker
+
+  # Fix drive paths for volume mount
+  if mount | grep -w "/c" > /dev/null; then
+    echo "/c driver already mounted"
+  else
+    echo "Mounting /c driver"
+    sudo mkdir -p /c
+    sudo mount --bind /mnt/c /c
+  fi
+}
+
 wsl::Execute()
 {
   # Usage: Execute <in:program_path> [<parameters>...]
