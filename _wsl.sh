@@ -6,13 +6,18 @@ wsl::PrepareDocker()
   # Usage: PrepareDocker
 
   # Fix drive paths for volume mount
-  if mount | grep -w "/c" > /dev/null; then
-    echo "/c driver already mounted"
-  else
-    echo "Mounting /c driver"
+  echo -ne "Fixing driver path for volume mount ... "
+  if ! mount | grep -w "/c" > /dev/null; then
     sudo mkdir -p /c
     sudo mount --bind /mnt/c /c
   fi
+  echo "DONE (New volumes: /c=/mnt/c)"
+
+  echo -ne "Starting Docker Relay ... "
+  if [ ! -S /var/run/docker.sock ]; then
+    sudo ./docker-relay &
+  fi
+  echo "DONE (Docker Relay PID:$(pidof socat))"
 }
 
 wsl::Execute()
