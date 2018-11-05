@@ -8,11 +8,14 @@ devops::SetupScripts()
   # Usage: SetupScripts
 
   mkdir -p ~/bin
-  if [ ! -f ~/bin/devops  ]; then 
-    echo "Creating devops" 
+  if [ ! -f ~/bin/devops  ]; then
+    echo -ne "Creating devops ... "
+
+    local current_dir=$(pwd -P)
     echo '#!/usr/bin/env bash' >> ~/bin/devops
-    echo '/mnt/c/Users/roger/git/roger/productivity/scripts/devops.sh "$@"' >> ~/bin/devops
+    echo "${current_dir}/devops.sh \"\$@\"" >> ~/bin/devops
     chmod +x ~/bin/devops
+    echo "DONE"
   fi
 }
 
@@ -118,7 +121,7 @@ devops::StartConanRepositoryCommand()
 devops::StartFnServer()
 {
   # Usage: StartFnServer
-  
+
   local name="fnserver"
   local docker_socket="-v /var/run/docker.sock:/var/run/docker.sock"
   local port="--privileged -p 8080:8080"
