@@ -3,6 +3,19 @@ source ./_log.sh
 source ./_docker.sh
 source ./_wsl.sh
 
+devops::SetupScripts()
+{
+  # Usage: SetupScripts
+
+  mkdir -p ~/bin
+  if [ ! -f ~/bin/devops  ]; then 
+    echo "Creating devops" 
+    echo '#!/usr/bin/env bash' >> ~/bin/devops
+    echo '/mnt/c/Users/roger/git/roger/productivity/scripts/devops.sh "$@"' >> ~/bin/devops
+    chmod +x ~/bin/devops
+  fi
+}
+
 devops::SetupWSL()
 {
   # Usage: SetupWSL

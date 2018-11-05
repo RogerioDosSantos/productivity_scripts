@@ -42,6 +42,7 @@ DisplayHelp()
   echo "--log_enable (-le) : Enable log"
   echo "--log_show (-ls) : Show log"
   echo "--log_level (-ll) <level>: Define the Log Level (Default: $(log::level))"
+  echo "--setup_scripts (-ss) : Create the scripts callers on the ~/bin folder so it can be called directly."
   echo "--setup_wsl (-ws) : Prepare the WSL environment to have the proper configuration and mappings"
   echo "--jenkins_server_start (-js) : Start Jenkins Server"
   echo "--conan_repository_server_start (-cs) : Start Conan Package Manager Repository (JFrog Artifactory Server)"
@@ -73,6 +74,10 @@ Main()
               DisplayHelp
               exit
               ;;
+          --setup_scripts|-ss)
+              devops::SetupScripts
+              break
+            ;;
           --setup_wsl|-ws)
               devops::SetupWSL
               break
