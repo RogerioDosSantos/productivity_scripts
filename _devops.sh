@@ -115,4 +115,40 @@ devops::StartConanRepositoryCommand()
   echo "Conan Package Manager Repository Server Url: http://localhost:8082"
 }
 
+devops::StartFnServer()
+{
+  # Usage: StartFnServer
+  
+  local name="fnserver"
+  local docker_socket="-v /var/run/docker.sock:/var/run/docker.sock"
+  local port="--privileged -p 8080:8080"
+  local proxy="$(docker::GetProxyConfiguration)"
+  local data="-v fn_server_data:/app/data"
+  local entrypoint="--entrypoint ./fnserver"
+  local image="fnproject/fnserver"
+  local docker_command="docker run --rm -d -i --name ${name} ${docker_socket} ${proxy} ${data} ${port} ${entrypoint} ${image}"
+  log::Log "info" "5" "Docker Command" "${docker_command}"
+  local result="$(${docker_command})"
+  log::Log "info" "5" "Docker Command Result" "${result}"
+  if [ "$(docker::IsContainerRunning "${name}")" == "true" ]; then
+    log::Log "info" "5" "Fn Server started with success" ""
+    echo "true"
+    return 0
+  fi
 
+  return "false"
+}
+
+devops::StartFnServerCommand()
+{
+  #Usage: StartFnServerCommand
+
+  echo "Starting Fn Server..."
+  local result="$(devops::StartFnServer)"
+  if [ "${result}" != "true" ]; then
+    echo "- Could not start Fn Server!"
+    return 0
+  fi
+
+  echo "Fn Server Url: http://localhost:8080"
+}

@@ -46,6 +46,7 @@ DisplayHelp()
   echo "--setup_wsl (-ws) : Prepare the WSL environment to have the proper configuration and mappings"
   echo "--jenkins_server_start (-js) : Start Jenkins Server"
   echo "--conan_repository_server_start (-cs) : Start Conan Package Manager Repository (JFrog Artifactory Server)"
+  echo "--fn_server_start (-fs) : Start Fn Server"
 
   echo " "
 }
@@ -88,6 +89,10 @@ Main()
             ;;
           --conan_repository_server_start|-cs)
               devops::StartConanRepositoryCommand
+              break
+            ;;
+          --fn_server_start|-fs)
+              devops::StartFnServerCommand
               break
             ;;
           -*)
