@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Functions
 
@@ -8,7 +8,7 @@ Init()
   g_script_name="$(basename "$0")"
   g_caller_dir=$(pwd)
   cd "$(dirname "$0")"
-  g_script_dir=$(pwd)
+  g_script_dir=$(pwd -P)
 
   # Load dependencies
   source ./_log.sh
@@ -42,8 +42,11 @@ DisplayHelp()
   echo "--log_enable (-le) : Enable log"
   echo "--log_show (-ls) : Show log"
   echo "--log_level (-ll) <level>: Define the Log Level (Default: $(log::level))"
+  echo "--setup_scripts (-ss) : Create the scripts callers on the ~/bin folder so it can be called directly."
+  echo "--setup_wsl (-ws) : Prepare the WSL environment to have the proper configuration and mappings"
   echo "--jenkins_server_start (-js) : Start Jenkins Server"
   echo "--conan_repository_server_start (-cs) : Start Conan Package Manager Repository (JFrog Artifactory Server)"
+  echo "--fn_server_start (-fs) : Start Fn Server"
 
   echo " "
 }
@@ -72,12 +75,24 @@ Main()
               DisplayHelp
               exit
               ;;
+          --setup_scripts|-ss)
+              devops::SetupScripts
+              break
+            ;;
+          --setup_wsl|-ws)
+              devops::SetupWSL
+              break
+            ;;
           --jenkins_server_start|-js)
               devops::StartJenkinsServerCommand
               break
             ;;
           --conan_repository_server_start|-cs)
               devops::StartConanRepositoryCommand
+              break
+            ;;
+          --fn_server_start|-fs)
+              devops::StartFnServerCommand
               break
             ;;
           -*)
