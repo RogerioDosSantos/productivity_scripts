@@ -7,10 +7,8 @@ wsl::PrepareDocker()
 
   # Fix drive paths for volume mount
   echo -ne "Fixing driver path for volume mount ... "
-  if ! mount | grep -w "/c" > /dev/null; then
-    sudo mkdir -p /c
-    sudo mount --bind /mnt/c /c
-  fi
+  sudo mkdir -p /c
+  sudo mount --bind /mnt/c /c
   echo "DONE (New volumes: /c=/mnt/c)"
 
   echo -ne "Starting Docker Relay ... "
