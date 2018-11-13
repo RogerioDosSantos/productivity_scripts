@@ -39,7 +39,7 @@ devops::StartJenkinsServer()
   fi
 
   local proxy_config="$(docker::GetProxyConfiguration)"
-  local docker_command="docker run --name jenkins --rm -d ${proxy_config} -p 8080:8080 -p 50000:50000 -v jenkins_data:/var/jenkins_home jenkins/jenkins:lts"
+  local docker_command="docker run --name jenkins --rm -d ${proxy_config} -v /var/run/docker.sock:/var/run/docker.sock -v /c/Users:/var/jenkins_home/host -p 8080:8080 -p 50000:50000 -v jenkins_data:/var/jenkins_home rogersantos/jenkins_server"
   log::Log "info" "5" "Docker Command" "${docker_command}"
 
   local result="$(${docker_command})"
