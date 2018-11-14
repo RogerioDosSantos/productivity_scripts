@@ -49,7 +49,7 @@ DisplayHelp()
   echo "--setup_wsl (-ws) : Prepare the WSL have the proper intallation, configuration and mappings"
   echo "--jenkins_server_start (-js) : Start Jenkins Server"
   echo "--artifactory_server_start (-as) : Start JFrog Artifactory Server (Conan Package Manager Repository)"
-  echo "--conan_client_start (-cs) <platform>: Start Conan Client for an specific platform. (E.g.: linux_x64)"
+  echo "--builder_start (-bs): Start Builder (with Conan Client)"
   echo "--fn_server_start (-fs) : Start Fn Server"
   echo " "
 }
@@ -94,10 +94,10 @@ Main()
               devops::StartArtifactoryServerCommand
               break
             ;;
-          # --conan_client_start|-cs)
-          #     devops::StartConanClient "$2"
-          #     break
-          #   ;;
+          --builder_start|-bs)
+              devops::StartBuilder
+              break
+            ;;
           --fn_server_start|-fs)
               devops::StartFnServerCommand
               break

@@ -12,10 +12,16 @@ devops_tests::StartArtifactoryServer()
   devops::StartArtifactoryServer | qa::AreEqual "true" "Could not start Conan Repository server"
 }
 
+devops_tests::StartBuilder()
+{
+  devops::StartBuilder | grep "Builder started" | qa::AreEqual "builder_started" "Could not start builder"
+}
+
 qa::Init "devops"
 
 devops_tests::StartJenkinsServer
 devops_tests::StartArtifactoryServer
+devops_tests::StartBuilder
 
 qa::End
 

@@ -2,6 +2,7 @@
 source ./_log.sh
 source ./_docker.sh
 source ./_wsl.sh
+source ./_builder.sh
 
 devops::SetupScripts()
 {
@@ -118,34 +119,24 @@ devops::StartArtifactoryServerCommand()
   echo "Conan Package Manager Repository Server Url: http://localhost:8082"
 }
 
-# devops::StartConanClient()
-# {
-#   #Usage: StartConanClient <platform>
-#   local in_platform="$1"
-#
-#   log::Log "info" "5" "Starting Conan Client (${in_platform})" ""
-#
-#   local image_name="conan_${platform}"
-#   if [ "$(docker::IsContainerRunning "${image_name}")" == "true" ]; then
-#     log::Log "info" "5" "Conan Client (${in_platform}) container is already running" ""
-#     echo "true"
-#     return 0
-#   fi
-#
-#   local proxy_config="$(docker::GetProxyConfiguration)"
-#   local docker_command="docker run --name ${image_name} --rm -d ${proxy_config} -v /var/run/docker.sock:/var/run/docker.sock -v /c/Users:/var/jenkins_home/host -p 8080:8080 -p 50000:50000 -v jenkins_data:/var/jenkins_home rogersantos/jenkins_server"
-#   log::Log "info" "5" "Docker Command" "${docker_command}"
-#
-#   local result="$(${docker_command})"
-#   log::Log "info" "5" "Docker Command Result" "${result}"
-#   if [ "$(docker::IsContainerRunning "jenkins")" == "true" ]; then
-#     log::Log "info" "5" "Jenkins Server started with success" ""
-#     echo "true"
-#     return 0
-#   fi
-#
-#   echo "false"
-# }
+devops::StartBuilder()
+{
+  #Usage: StartBuilder
+
+  echo "Starting builder with the following configutation:"
+  echo "- Image: $(builder::image)"
+  echo "- Container name: $(builder::container_name)"
+  echo "- Workspace: $(builder::workspace_volume)"
+  echo "- Stage: $(builder::stage_volume)"
+
+  local result="$(builder::StartBuilder)"
+  if [ "${result}" != "true" ]; then
+    echo "- Could not start Builder!"
+    return 0
+  fi
+
+  echo "Builder started"
+}
 
 devops::StartFnServer()
 {
