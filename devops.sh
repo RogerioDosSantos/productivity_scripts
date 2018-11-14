@@ -35,19 +35,22 @@ ErrorHandler()
 
 DisplayHelp()
 {
-  echo "${g_script_name/.sh/} --<command> [<command_options>]"
+
+  echo "${g_script_name/.sh/} --<options> --<command> [<command_options>]"
   echo " "
-  echo "- Commands:"
-  echo "--help (h) : Display this command help"
+  echo "- Options:"
   echo "--log_enable (-le) : Enable log"
   echo "--log_show (-ls) : Show log"
   echo "--log_level (-ll) <level>: Define the Log Level (Default: $(log::level))"
-  echo "--setup_scripts (-ss) : Create the scripts callers on the ~/bin folder so it can be called directly."
-  echo "--setup_wsl (-ws) : Prepare the WSL environment to have the proper configuration and mappings"
+  echo " "
+  echo "- Commands:"
+  echo "--help (h) : Display this command help"
+  echo "--setup_scripts (-ss) : Create the scripts callers and profile."
+  echo "--setup_wsl (-ws) : Prepare the WSL have the proper intallation, configuration and mappings"
   echo "--jenkins_server_start (-js) : Start Jenkins Server"
-  echo "--conan_repository_server_start (-cs) : Start Conan Package Manager Repository (JFrog Artifactory Server)"
+  echo "--artifactory_server_start (-as) : Start JFrog Artifactory Server (Conan Package Manager Repository)"
+  echo "--conan_client_start (-cs) <platform>: Start Conan Client for an specific platform. (E.g.: linux_x64)"
   echo "--fn_server_start (-fs) : Start Fn Server"
-
   echo " "
 }
 
@@ -87,10 +90,14 @@ Main()
               devops::StartJenkinsServerCommand
               break
             ;;
-          --conan_repository_server_start|-cs)
-              devops::StartConanRepositoryCommand
+          --artifactory_server_start|-as)
+              devops::StartArtifactoryServerCommand
               break
             ;;
+          # --conan_client_start|-cs)
+          #     devops::StartConanClient "$2"
+          #     break
+          #   ;;
           --fn_server_start|-fs)
               devops::StartFnServerCommand
               break

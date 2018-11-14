@@ -7,11 +7,10 @@ devops::SetupScripts()
 {
   # Usage: SetupScripts
 
+  local current_dir=$(pwd -P)
   mkdir -p ~/bin
   if [ ! -f ~/bin/devops  ]; then
     echo -ne "Creating devops ... "
-
-    local current_dir=$(pwd -P)
     echo '#!/usr/bin/env bash' >> ~/bin/devops
     echo "${current_dir}/devops.sh \"\$@\"" >> ~/bin/devops
     chmod +x ~/bin/devops
@@ -71,9 +70,9 @@ devops::StartJenkinsServerCommand()
   echo "Jenkins Server Initial Password: ${initial_password}"
 }
 
-devops::StartConanRepository()
+devops::StartArtifactoryServer()
 {
-  #Usage: StartConanRepository
+  #Usage: StartArtifactoryServer
 
   log::Log "info" "5" "Conan Package Manager Repository (JFrog Artifactory Server)" ""
 
@@ -104,12 +103,12 @@ devops::StartConanRepository()
   echo "false"
 }
 
-devops::StartConanRepositoryCommand()
+devops::StartArtifactoryServerCommand()
 {
-  #Usage: StartConanRepositoryCommand
+  #Usage: StartArtifactoryServerCommand
 
   echo "Conan Package Manager Repository (JFrog Artifactory Server)..."
-  local result="$(devops::StartConanRepository)"
+  local result="$(devops::StartArtifactoryServer)"
   if [ "${result}" != "true" ]; then
     echo "- Could not start Conan Package Manager Repository (JFrog Artifactory Server)!"
     return 0
@@ -117,6 +116,35 @@ devops::StartConanRepositoryCommand()
 
   echo "Conan Package Manager Repository Server Url: http://localhost:8082"
 }
+
+# devops::StartConanClient()
+# {
+#   #Usage: StartConanClient <platform>
+#   local in_platform="$1"
+#
+#   log::Log "info" "5" "Starting Conan Client (${in_platform})" ""
+#
+#   local image_name="conan_${platform}"
+#   if [ "$(docker::IsContainerRunning "${image_name}")" == "true" ]; then
+#     log::Log "info" "5" "Conan Client (${in_platform}) container is already running" ""
+#     echo "true"
+#     return 0
+#   fi
+#
+#   local proxy_config="$(docker::GetProxyConfiguration)"
+#   local docker_command="docker run --name ${image_name} --rm -d ${proxy_config} -v /var/run/docker.sock:/var/run/docker.sock -v /c/Users:/var/jenkins_home/host -p 8080:8080 -p 50000:50000 -v jenkins_data:/var/jenkins_home rogersantos/jenkins_server"
+#   log::Log "info" "5" "Docker Command" "${docker_command}"
+#
+#   local result="$(${docker_command})"
+#   log::Log "info" "5" "Docker Command Result" "${result}"
+#   if [ "$(docker::IsContainerRunning "jenkins")" == "true" ]; then
+#     log::Log "info" "5" "Jenkins Server started with success" ""
+#     echo "true"
+#     return 0
+#   fi
+#
+#   echo "false"
+# }
 
 devops::StartFnServer()
 {
@@ -155,3 +183,7 @@ devops::StartFnServerCommand()
 
   echo "Fn Server Url: http://localhost:8080"
 }
+
+
+
+
