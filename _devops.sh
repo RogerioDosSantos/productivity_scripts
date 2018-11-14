@@ -176,6 +176,15 @@ devops::StartFnServerCommand()
   echo "Fn Server Url: http://localhost:8080"
 }
 
+devops::GetDockerRunCommand()
+{
+  #Usage: GetDockerRunCommand <in:container>
+  local container="$1"
+
+  local docker_command="docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock rogersantos/docker_runlike ${container}"
+  log::Log "info" "5" "Docker Command" "${docker_command}"
+  echo "$(${docker_command})"
+}
 
 
 
