@@ -1,4 +1,6 @@
 
+source ./_profile.sh
+
 log::enable_log()
 {
   if [ "$#" != 0 ]; then
@@ -7,7 +9,7 @@ log::enable_log()
     return 0
   fi
 
-  echo "${log__enable_log:-"false"}"
+  echo "${log__enable_log:-"$(profile::GetValue "log_enabled" false)"}"
 }
 
 log::show_log()
@@ -19,7 +21,7 @@ log::show_log()
     return 0
   fi
 
-  echo "${log__show_log:-"false"}"
+  echo "${log__show_log:-"$(profile::GetValue "show_log" false)"}"
 }
 
 log::level()
@@ -30,7 +32,7 @@ log::level()
     return 0
   fi
 
-  echo "${log__level:-"1"}"
+  echo "${log__level:-"$(profile::GetValue "log_level" 1)"}"
 }
 
 log::file_path()
