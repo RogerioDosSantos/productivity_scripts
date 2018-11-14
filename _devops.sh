@@ -22,6 +22,7 @@ devops::SetupWSL()
 {
   # Usage: SetupWSL
 
+  wsl::InstallPrograms
   wsl::PrepareDocker
 }
 

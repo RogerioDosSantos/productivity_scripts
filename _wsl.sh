@@ -51,3 +51,36 @@ wsl::ConvertLinuxPathToWindowsPath()
   return 0
 }
 
+wsl::InstallPrograms()
+{
+  # Usage: InstallPrograms
+
+  echo -ne "Fixing driver path for volume mount ... "
+  sudo apt-get update \
+  && sudo apt-get install -y \
+      git \
+      rsync \
+      encfs \
+      build-essential \
+      cmake \
+      python-dev \
+      nodejs \
+      npm \
+      vim-gtk \
+      silversearcher-ag \
+      exuberant-ctags \
+      clang \
+      clang-format \
+      clang-tidy \
+      cppcheck \
+      doxygen \
+      cgdb \
+      valgrind \
+      editorconfig \
+      pandoc \
+  && sudo npm -y install -g typescript
+  echo "DONE (New volumes: /c=/mnt/c)"
+
+}
+
+
