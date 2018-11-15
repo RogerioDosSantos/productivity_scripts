@@ -1,21 +1,61 @@
 
 source ./_log.sh
 
-wsl::PrepareDocker()
+wsl::InstallPrograms()
 {
-  # Usage: PrepareDocker
+  # Usage: InstallPrograms
 
-  # Fix drive paths for volume mount
-  echo -ne "Fixing driver path for volume mount ... "
-  sudo mkdir -p /c
-  sudo mount --bind /mnt/c /c
-  echo "DONE (New volumes: /c=/mnt/c)"
+  echo "Installing/Updating programs ... "
+  sudo apt-get update \
+  && sudo apt-get install -y \
+      git \
+      rsync \
+      encfs \
+      build-essential \
+      cmake \
+      python-dev \
+      nodejs \
+      npm \
+      vim-gtk \
+      silversearcher-ag \
+      exuberant-ctags \
+      clang \
+      clang-format \
+      clang-tidy \
+      cppcheck \
+      doxygen \
+      cgdb \
+      valgrind \
+      editorconfig \
+      pandoc \
+  && sudo npm -y install -g typescript
+  echo "Installing/Updating programs - DONE"
+}
 
-  echo -ne "Starting Docker Relay ... "
-  if [ ! -S /var/run/docker.sock ]; then
-    sudo ./docker-relay &
-  fi
-  echo "DONE (Docker Relay PID:$(pidof socat))"
+wsl::PrepareLinks()
+{
+  # Usage: PrepareLinks
+
+  local us_roger_environment_dir
+  read -p "Enter roger environment folder (Default: /c/Users/roger/git/roger): " us_roger_environment_dir
+  us_roger_environment_dir=${us_roger_environment_dir:-/c/Users/roger/git/roger}
+
+  echo -ne "Creating Linux links ..."
+  rm ~/roger && ln -s ${us_roger_environment_dir} ~/roger 
+  rm ~/temp && ln -s ~/roger/temp ~/temp 
+  rm ~/wiki && ln -s ~/roger/projects/wiki ~/wiki 
+  rm ~/.bashrc && ln -s ~/roger/devops/linux_environment/src/environment/linux/bashrc_schneider ~/.bashrc 
+  rm ~/.editorconfig && ln -s ~/roger/devops/linux_environment/src/environment/editorconfig/editorconfig ~/.editorconfig 
+  rm ~/.gitconfig && ln -s ~/roger/devops/linux_environment/src/environment/git/gitconfig ~/.gitconfig 
+  rm ~/.marvim && ln -s ~/roger/devops/linux_environment/src/environment/marvim ~/.marvim 
+  rm ~/.syntastic_cpp_config && ln -s ~/roger/devops/linux_environment/src/environment/syntastic/syntastic_cpp_config_schneider ~/.syntastic_cpp_config 
+  rm ~/.tmux && ln -s ~/roger/devops/linux_environment/src/environment/tmux/tmux ~/.tmux 
+  rm ~/.tmux.conf && ln -s ~/roger/devops/linux_environment/src/environment/tmux/tmux.conf ~/.tmux.conf 
+  rm ~/.vim && ln -s ~/roger/devops/linux_environment/src/environment/vim/vim ~/.vim 
+  rm ~/.vimrc && ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc ~/.vimrc 
+  rm ~/.vimrc.bundles && ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc.bundles ~/.vimrc.bundles 
+  rm ~/.script_profile && ln -s ~/roger/devops/linux_environment/src/environment/profiles/script_profile_aveva ~/.script_profile 
+  echo "DONE"
 }
 
 wsl::Execute()
@@ -50,37 +90,4 @@ wsl::ConvertLinuxPathToWindowsPath()
   echo "${in_path}"
   return 0
 }
-
-wsl::InstallPrograms()
-{
-  # Usage: InstallPrograms
-
-  echo -ne "Fixing driver path for volume mount ... "
-  sudo apt-get update \
-  && sudo apt-get install -y \
-      git \
-      rsync \
-      encfs \
-      build-essential \
-      cmake \
-      python-dev \
-      nodejs \
-      npm \
-      vim-gtk \
-      silversearcher-ag \
-      exuberant-ctags \
-      clang \
-      clang-format \
-      clang-tidy \
-      cppcheck \
-      doxygen \
-      cgdb \
-      valgrind \
-      editorconfig \
-      pandoc \
-  && sudo npm -y install -g typescript
-  echo "DONE (New volumes: /c=/mnt/c)"
-
-}
-
 

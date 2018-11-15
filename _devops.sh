@@ -23,8 +23,24 @@ devops::SetupWSL()
 {
   # Usage: SetupWSL
 
-  wsl::InstallPrograms
-  wsl::PrepareDocker
+  local ui_yes_no
+	while true; do
+    read -p "Would you like to install/update programs (yes(y)/no(n))? " ui_yes_no
+    case $ui_yes_no in
+        [Yy]* ) wsl::InstallPrograms; break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+	done
+
+	while true; do
+    read -p "Would you like to create/update links (yes(y)/no(n))? " ui_yes_no
+    case $ui_yes_no in
+        [Yy]* ) wsl::PrepareLinks; break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+	done
 }
 
 devops::StartJenkinsServer()
