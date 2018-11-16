@@ -53,7 +53,8 @@ wsl::PrepareLinks()
   rm ~/.tmux.conf && ln -s ~/roger/devops/linux_environment/src/environment/tmux/tmux.conf ~/.tmux.conf 
   rm ~/.vim && ln -s ~/roger/devops/linux_environment/src/environment/vim/vim ~/.vim 
   rm ~/.vimrc && ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc ~/.vimrc 
-  rm ~/.vimrc.bundles && ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc.bundles ~/.vimrc.bundles 
+  rm ~/.vimrc_plugins && ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc_plugins ~/.vimrc_plugins
+  rm ~/.vimrc_mapping && ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc_mapping ~/.vimrc_mapping
   rm ~/.script_profile && ln -s ~/roger/devops/linux_environment/src/environment/profiles/script_profile_aveva ~/.script_profile 
   echo "DONE"
 }
