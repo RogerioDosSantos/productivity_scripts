@@ -41,22 +41,22 @@ wsl::PrepareLinks()
   us_roger_environment_dir=${us_roger_environment_dir:-/c/Users/roger/git/roger}
 
   echo -ne "Creating Linux links ..."
-  rm ~/roger && ln -s ${us_roger_environment_dir} ~/roger 
-  rm ~/temp && ln -s ~/roger/temp ~/temp 
-  rm ~/wiki && ln -s ~/roger/projects/wiki ~/wiki 
-  rm ~/.bashrc && ln -s ~/roger/devops/linux_environment/src/environment/linux/bashrc_schneider ~/.bashrc 
-  rm ~/.editorconfig && ln -s ~/roger/devops/linux_environment/src/environment/editorconfig/editorconfig ~/.editorconfig 
-  rm ~/.gitconfig && ln -s ~/roger/devops/linux_environment/src/environment/git/gitconfig ~/.gitconfig 
-  rm ~/.marvim && ln -s ~/roger/devops/linux_environment/src/environment/marvim ~/.marvim 
-  rm ~/.syntastic_cpp_config && ln -s ~/roger/devops/linux_environment/src/environment/syntastic/syntastic_cpp_config_schneider ~/.syntastic_cpp_config 
-  rm ~/.tmux && ln -s ~/roger/devops/linux_environment/src/environment/tmux/tmux ~/.tmux 
-  rm ~/.tmux.conf && ln -s ~/roger/devops/linux_environment/src/environment/tmux/tmux.conf ~/.tmux.conf 
-  rm ~/.vim && ln -s ~/roger/devops/linux_environment/src/environment/vim/vim ~/.vim 
-  rm ~/.vimrc && ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc ~/.vimrc 
-  rm ~/.vimrc_plugins && ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc_plugins ~/.vimrc_plugins
-  rm ~/.vimrc_mapping && ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc_mapping ~/.vimrc_mapping
-  rm ~/.ctags && ln -s ~/roger/devops/linux_environment/src/environment/ctags/ctags ~/.ctags
-  rm ~/.script_profile && ln -s ~/roger/devops/linux_environment/src/environment/profiles/script_profile_aveva ~/.script_profile 
+  rm ~/roger || ln -s ${us_roger_environment_dir} ~/roger 
+  rm ~/temp || ln -s ~/roger/temp ~/temp 
+  rm ~/wiki || ln -s ~/roger/projects/wiki ~/wiki 
+  rm ~/.bashrc || ln -s ~/roger/devops/linux_environment/src/environment/linux/bashrc_roger ~/.bashrc 
+  rm ~/.editorconfig || ln -s ~/roger/devops/linux_environment/src/environment/editorconfig/editorconfig ~/.editorconfig 
+  rm ~/.gitconfig || ln -s ~/roger/devops/linux_environment/src/environment/git/gitconfig ~/.gitconfig 
+  rm ~/.marvim || ln -s ~/roger/devops/linux_environment/src/environment/marvim ~/.marvim 
+  rm ~/.syntastic_cpp_config || ln -s ~/roger/devops/linux_environment/src/environment/syntastic/syntastic_cpp_config_schneider ~/.syntastic_cpp_config 
+  rm ~/.tmux || ln -s ~/roger/devops/linux_environment/src/environment/tmux/tmux ~/.tmux 
+  rm ~/.tmux.conf || ln -s ~/roger/devops/linux_environment/src/environment/tmux/tmux.conf ~/.tmux.conf 
+  rm ~/.vim || ln -s ~/roger/devops/linux_environment/src/environment/vim/vim ~/.vim 
+  rm ~/.vimrc || ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc ~/.vimrc 
+  rm ~/.vimrc_plugins || ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc_plugins ~/.vimrc_plugins
+  rm ~/.vimrc_mapping || ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc_mapping ~/.vimrc_mapping
+  rm ~/.ctags || ln -s ~/roger/devops/linux_environment/src/environment/ctags/ctags ~/.ctags
+  rm ~/.script_profile || ln -s ~/roger/devops/linux_environment/src/environment/profiles/script_profile_aveva ~/.script_profile 
   echo "DONE"
 }
 
