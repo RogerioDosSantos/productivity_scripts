@@ -28,6 +28,7 @@ wsl::InstallPrograms()
       valgrind \
       editorconfig \
       pandoc \
+      jq \
   && sudo npm -y install -g typescript
   echo "Installing/Updating programs - DONE"
 }
