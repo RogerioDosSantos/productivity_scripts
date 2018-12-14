@@ -8,27 +8,28 @@ wsl::InstallPrograms()
   echo "Installing/Updating programs ... "
   sudo apt-get update \
   && sudo apt-get install -y \
-      git \
-      rsync \
-      encfs \
       build-essential \
-      cmake \
-      python-dev \
-      nodejs \
-      npm \
-      vim-gtk \
-      silversearcher-ag \
-      exuberant-ctags \
+      cgdb \
       clang \
       clang-format \
       clang-tidy \
+      cmake \
       cppcheck \
       doxygen \
-      cgdb \
-      valgrind \
       editorconfig \
-      pandoc \
+      encfs \
+      exuberant-ctags \
+      git \
       jq \
+      nodejs \
+      npm \
+      pandoc \
+      python-dev \
+      rsync \
+      silversearcher-ag \
+      tree \
+      valgrind \
+      vim-gtk \
   && sudo npm -y install -g typescript
   echo "Installing/Updating programs - DONE"
 }
