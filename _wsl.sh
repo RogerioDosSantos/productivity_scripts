@@ -15,6 +15,7 @@ wsl::InstallPrograms()
       clang-tidy \
       cmake \
       cppcheck \
+      default-jre \
       doxygen \
       editorconfig \
       encfs \
