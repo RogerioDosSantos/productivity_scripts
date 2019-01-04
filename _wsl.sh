@@ -20,6 +20,7 @@ wsl::InstallPrograms()
       editorconfig \
       encfs \
       exuberant-ctags \
+      figlet \
       git \
       jq \
       nodejs \
