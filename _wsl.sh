@@ -27,6 +27,7 @@ wsl::InstallPrograms()
       npm \
       pandoc \
       python-dev \
+      python-pip \
       rsync \
       silversearcher-ag \
       tree \
