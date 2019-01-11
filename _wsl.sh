@@ -89,8 +89,13 @@ wsl::ConvertLinuxPathToWindowsPath()
 {
   # Usage: ConvertLinuxPathToWindowsPath <in:path>
   local in_path=$1
-  in_path=${in_path/\/mnt\//}
+
+  log::Log "info" "5" "Linux Path" "${in_path}"
+
+  in_path=${in_path/\//}
+  in_path=${in_path/mnt\//}
   in_path=${in_path/\//:\/}
+  log::Log "info" "5" "Windows Path" "${in_path}"
   in_path=$(wsl::GetShortNamePath "${in_path}")
   echo "${in_path}"
   return 0

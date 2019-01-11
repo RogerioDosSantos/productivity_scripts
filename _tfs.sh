@@ -27,12 +27,15 @@ tfs::Checkout()
 
   local file_name="$(shell::GetFileName "${in_file_path}")"
   local file_path="$(shell::NormalizePath "${in_file_path}")"
+  log::Log "info" "5" "Normalized Path" "${file_path}"
+
   local windows_file_path="$(wsl::ConvertLinuxPathToWindowsPath "${file_path}")"
   log::Log "info" "5" "Windows File Path" "${windows_file_path}"
 
   local result="$(wsl::Execute "_tfs.bat" -co "${windows_file_path}" | grep "${file_name}" | tr -d '[:space:]')"
   log::Log "info" "5" "Checkout result" "${result}"
-  if [ "${result}" == "${file_name}" ]; then
+  log::Log "info" "5" "Checkout expected result" "${file_name// /}"
+  if [ "${result}" == "${file_name// /}" ]; then
     echo "true"
     return 0
   fi
