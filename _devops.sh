@@ -202,5 +202,9 @@ devops::GetDockerRunCommand()
   echo "$(${docker_command})"
 }
 
+devops::ExecuteOnWindows()
+{
+  wsl::Execute "$@"
+}
 
 

@@ -52,6 +52,7 @@ DisplayHelp()
   echo "--builder_start (-bs): Start Builder (with Conan Client)"
   echo "--fn_server_start (-fs) : Start Fn Server"
   echo "--get_docker_run_command (-gr) <container> : Get the run command of a container. You can inform the container name or id."
+  echo "--execute_on_windows (-ew) <command> : Run using Windows shell command"
   echo " "
 }
 
@@ -105,6 +106,11 @@ Main()
             ;;
           --get_docker_run_command|-gr)
               devops::GetDockerRunCommand "$2"
+              break
+            ;;
+          --execute_on_windows|-ew)
+              shift 1
+              devops::ExecuteOnWindows "$@"
               break
             ;;
           -*)

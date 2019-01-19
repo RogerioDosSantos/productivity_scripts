@@ -1,4 +1,6 @@
 
+pushd "$(dirname "$0")" > /dev/null
+
 source ./_qa.sh
 source ./_devops.sh
 
@@ -32,11 +34,15 @@ devops_tests::GetDockerRunCommand()
 
 qa::Init "devops"
 
-devops_tests::StartJenkinsServer
-devops_tests::StartArtifactoryServer
-devops_tests::StartBuilder
-devops_tests::GetDockerRunCommand
+if [ "${1}" != "" ]; then
+  devops_tests::${1}
+else
+  devops_tests::StartJenkinsServer
+  devops_tests::StartArtifactoryServer
+  devops_tests::StartBuilder
+  devops_tests::GetDockerRunCommand
+fi
 
 qa::End
 
-
+popd > /dev/null
