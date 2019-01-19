@@ -207,4 +207,7 @@ devops::ExecuteOnWindows()
   wsl::Execute "$@"
 }
 
-
+devops::ConvertToWindowsPath()
+{
+  wsl::ConvertLinuxPathToWindowsPath "$@"
+}

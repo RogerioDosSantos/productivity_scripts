@@ -70,9 +70,17 @@ wsl::Execute()
 {
   # Usage: Execute <in:program_path> [<parameters>...]
 
-  local shell_command="cmd.exe /C $@"
+  if [ "${g_caller_dir}" != "" ]; then
+    pushd "${g_caller_dir}" > /dev/null
+  fi
+
+  local shell_command="cmd.exe /C powershell $@"
   log::Log "info" "5" "Shell Command" "${shell_command}"
-  cmd.exe /C $@
+  cmd.exe /C powershell $@
+
+  if [ "${g_caller_dir}" != "" ]; then
+    popd
+  fi
 
   return 0
 }
