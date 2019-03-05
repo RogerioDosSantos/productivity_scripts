@@ -54,7 +54,7 @@ DisplayHelp()
   echo "--get_docker_run_command (-gr) <container> : Get the run command of a container. You can inform the container name or id."
   echo "--execute_on_windows (-we) <command> : Run using Windows shell command"
   echo "--convert_to_window_path (-wp) <path> : Convert Linux path to Windows path. E.g.: devops -wp \$(pwd -P)" 
-  echo "--bootstrap (-bo) <project_type> <project_path> : Bootstrap projects. E.g.: devops -bo cpp_project ~/temp/cpp_project" 
+  echo "--bootstrap (-bo) <project_type> <project_path> : Bootstrap projects. E.g.: devops -bo cpp ~/temp/cpp_project" 
   echo " "
 }
 
@@ -122,7 +122,7 @@ Main()
             ;;
           --bootstrap|-bo)
               shift 1
-              devops::Bootstrap "$2" "$3"
+              devops::Bootstrap "$1" "$2"
               break
             ;;
           -*)

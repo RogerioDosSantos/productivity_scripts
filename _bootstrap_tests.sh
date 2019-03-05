@@ -7,17 +7,28 @@ source ./_bootstrap.sh
 
 bootstrap_tests::BootstrapCpp()
 {
-  mkdir -p ./bootstrap_tests_temp_dir
-  bootstrap::BootstrapCpp ./bootstrap_tests_temp_dir #| qa::AreEqual "program_settings_path" "Could not convert Linux Path"
-  tree ./bootstrap_tests_temp_dir
-  rm ./bootstrap_tests_temp_dir -r 
+  mkdir -p ./bootstrap_tests_temp_dir > /dev/null
+
+  bootstrap::BootstrapCpp ./bootstrap_tests_temp_dir | grep directories | qa::AreEqual "bootstrap_files" "Bootstrap Changed"
+
+  rm ./bootstrap_tests_temp_dir -r > /dev/null
 }
 
-qa::Init "builder"
+bootstrap_tests::Bootstrap()
+{
+  mkdir -p ./bootstrap_tests_temp_dir > /dev/null
+
+  bootstrap::Bootstrap "cpp" ./bootstrap_tests_temp_dir | grep directories | qa::AreEqual "bootstrap_files" "Bootstrap Changed"
+
+  rm ./bootstrap_tests_temp_dir -r > /dev/null
+}
+
+qa::Init "bootstrap"
 
 if [ "${1}" != "" ]; then
   bootstrap_tests::${1}
 else
+  bootstrap_tests::Bootstrap
   bootstrap_tests::BootstrapCpp
 fi
 
