@@ -13,6 +13,7 @@ wsl::InstallPrograms()
       clang \
       clang-format \
       clang-tidy \
+      clang-tools-5.0 \
       cmake \
       cppcheck \
       default-jre \
@@ -34,8 +35,12 @@ wsl::InstallPrograms()
       tree \
       valgrind \
       vim-gtk \
-  && sudo npm -y install -g typescript
-  echo "Installing/Updating programs - DONE"
+  && sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-5.0 100 \
+  && pip install python-language-server \
+  && sudo npm -y install -g \
+      typescript \
+      heroku \
+  && echo "Installing/Updating programs - DONE"
 }
 
 wsl::PrepareLinks()
