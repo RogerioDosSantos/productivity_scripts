@@ -4,7 +4,7 @@ source ./_log.sh
 
 bootstrap::BootstrapCpp()
 {
-  # Usage: BootstrapCpp <in:project_dir> <in:template_dir>
+  # Usage: BootstrapCpp <in:project_dir> [<in:template_dir>]
   local in_project_dir="$1"
   local in_template_dir="${2:-$(pwd -P)/../templates}"
 
@@ -29,4 +29,20 @@ bootstrap::BootstrapCpp()
   popd
   log::Log "info" "5" "Creating minimal cpp project" "DONE"
 }
+
+bootstrap::Bootstrap()
+{
+  # Usage: Bootstrap <in:project_type> <in:project_dir>
+  local in_project_dir="$1"
+
+  case ${var} in
+      "t1") 
+        echo "t1"
+        ;;
+      *) 
+        echo "t2"
+        ;;
+  esac
+}
+
 

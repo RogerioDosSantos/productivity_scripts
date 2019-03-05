@@ -2,6 +2,7 @@
 source ./_log.sh
 source ./_docker.sh
 source ./_wsl.sh
+source ./_bootstrap.sh
 source ./_builder.sh
 
 devops::SetupScripts()
@@ -210,4 +211,9 @@ devops::ExecuteOnWindows()
 devops::ConvertToWindowsPath()
 {
   wsl::ConvertLinuxPathToWindowsPath "$@"
+}
+
+devops::Bootstrap()
+{
+  bootstrap::Bootstrap "$@"
 }
