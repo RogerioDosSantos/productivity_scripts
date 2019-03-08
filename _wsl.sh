@@ -65,6 +65,7 @@ wsl::PrepareLinks()
   rm ~/.vim || ln -s ~/roger/devops/linux_environment/src/environment/vim/vim ~/.vim
   rm ~/.vimrc || ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc ~/.vimrc
   rm ~/.vimrc_plugins || ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc_plugins ~/.vimrc_plugins
+  rm ~/.vimrc_commands || ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc_commands ~/.vimrc_commands
   rm ~/.vimrc_mapping || ln -s ~/roger/devops/linux_environment/src/environment/vim/vimrc_mapping ~/.vimrc_mapping
   rm ~/.ctags || ln -s ~/roger/devops/linux_environment/src/environment/ctags/ctags ~/.ctags
   rm ~/.script_profile || ln -s ~/roger/devops/linux_environment/src/environment/profiles/script_profile_aveva ~/.script_profile
