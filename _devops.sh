@@ -4,6 +4,7 @@ source ./_docker.sh
 source ./_wsl.sh
 source ./_bootstrap.sh
 source ./_builder.sh
+source ./_vim_helper.sh
 
 devops::SetupScripts()
 {
@@ -216,4 +217,9 @@ devops::ConvertToWindowsPath()
 devops::Bootstrap()
 {
   bootstrap::Bootstrap "$@"
+}
+
+devops::GetInput()
+{
+  vim_helper::GetInput "$@"
 }
