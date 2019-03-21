@@ -25,6 +25,7 @@ wsl::InstallPrograms()
       git \
       graphviz \
       jq \
+      m4 \
       nodejs \
       npm \
       pandoc \
