@@ -23,6 +23,7 @@ wsl::InstallPrograms()
       exuberant-ctags \
       figlet \
       git \
+      graphviz \
       jq \
       nodejs \
       npm \
