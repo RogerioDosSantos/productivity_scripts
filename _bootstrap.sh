@@ -12,20 +12,16 @@ bootstrap::BootstrapCpp()
   log::Log "info" "5" "Templates Dir" "${in_template_dir}"
   log::Log "info" "5" "Creating minimal cpp project" ""
   pushd "${in_project_dir}" > /dev/null
-  if [ -e "./README.md" ]; then
-    cp "./README.md" "./README.bkp"
-  fi
-
-  cp "${in_template_dir}/readme/readme_project_cpp.md" ./README.md
-  cp "${in_template_dir}/git/gitignore_cpp_project" ./.gitignore
-  cp "${in_template_dir}/cmake/conan_cpp_project.cmake" ./CMakeLists.txt
-  cp "${in_template_dir}/conan/conan_cpp_project.py" ./conanfile.py
+  cp -n "${in_template_dir}/readme/readme_project_cpp.md" ./README.md
+  cp -n "${in_template_dir}/git/gitignore_cpp_project" ./.gitignore
+  cp -n "${in_template_dir}/cmake/bootstrap_cpp_project_conan.cmake" ./CMakeLists.txt
+  cp -n "${in_template_dir}/conan/bootstrap_cpp_project.py" ./conanfile.py
   mkdir -p build 
-  cp "${in_template_dir}/docker/build_cpp_project_windows.docker" ./build/build_windows.docker
-  cp "${in_template_dir}/docker/docker_compose_build_windows.yaml" ./build/docker_compose_build_windows.yaml
+  cp -n "${in_template_dir}/docker/bootstrap_build_cpp_project_windows.docker" ./build/build_windows.docker
+  cp -n "${in_template_dir}/docker/bootstrap_build_cpp_project_windows.yaml" ./build/docker_compose_build_windows.yaml
   mkdir -p include 
   mkdir -p src 
-  cp "${in_template_dir}/cpp/boost_program_options.cpp" ./src/main.cpp
+  cp -n "${in_template_dir}/cpp/bootstrap_main.cpp" ./src/main.cpp
   log::Log "info" "1" "Project Structure" ""
   pwd
   tree .

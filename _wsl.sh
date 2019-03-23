@@ -23,7 +23,9 @@ wsl::InstallPrograms()
       exuberant-ctags \
       figlet \
       git \
+      graphviz \
       jq \
+      m4 \
       nodejs \
       npm \
       pandoc \

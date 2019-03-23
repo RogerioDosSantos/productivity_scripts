@@ -55,6 +55,7 @@ DisplayHelp()
   echo "--execute_on_windows (-we) <command> : Run using Windows shell command"
   echo "--convert_to_window_path (-wp) <path> : Convert Linux path to Windows path. E.g.: devops -wp \$(pwd -P)" 
   echo "--bootstrap (-bo) <project_type> <project_path> : Bootstrap projects. E.g.: devops -bo cpp ~/temp/cpp_project" 
+  echo "--get_input (-gi) <descrption> <default> : Get input from user. E.g.: devops -gi 'Enter your name' 'Roger' > ~/.user_input" 
   echo " "
 }
 
@@ -123,6 +124,11 @@ Main()
           --bootstrap|-bo)
               shift 1
               devops::Bootstrap "$1" "$2"
+              break
+            ;;
+          --get_input|-gi)
+              shift 1
+              devops::GetInput "$1" "$2"
               break
             ;;
           -*)
