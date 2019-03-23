@@ -210,6 +210,7 @@ devops::ExecuteOnWindows()
 
 devops::ConvertToWindowsPath()
 {
+  log::Log "info" "5" "Parameters" "$@"
   wsl::ConvertLinuxPathToWindowsPath "$@"
 }
 
