@@ -118,7 +118,7 @@ Main()
             ;;
           --convert_to_window_path|-wp)
               shift 1
-              devops::ConvertToWindowsPath "$2"
+              devops::ConvertToWindowsPath "$1"
               break
             ;;
           --bootstrap|-bo)
