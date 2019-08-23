@@ -40,10 +40,24 @@ iotedge::InstallMobyEngine()
   sudo apt-get update 
   sudo apt-get install -y \
     moby-engine \
-    moby-cli \
+    moby-cli 
   echo "- Moby/Docker Version:"  
   sudo docker version 
   echo "Installing Moby Engine ... DONE"
+  return 0
+}
+
+iotedge::AddMicrosoftRepository()
+{
+  #Usage: AddMicrosoftRepository
+  echo "Adding MicroSoft Repositories ..."
+  echo "- Product List"
+  curl https://packages.microsoft.com/config/ubuntu/18.04/multiarch/prod.list > ./microsoft-prod.list
+  sudo cp ./microsoft-prod.list /etc/apt/sources.list.d/
+  echo "- Trusted GPG"
+  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+  sudo cp ./microsoft.gpg /etc/apt/trusted.gpg.d/
+  echo "Adding MicroSoft Repositories ... DONE"
   return 0
 }
 
@@ -57,6 +71,7 @@ iotedge::InstallIoTEdge()
     return 0
   fi
   sudo echo "Installing IoTEdge ..." 
+  iotedge::AddMicrosoftRepository
   iotedge::InstallMobyEngine
   # apt-get update 
   # sudo apt-get install -y \
