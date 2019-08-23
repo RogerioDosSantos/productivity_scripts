@@ -30,7 +30,7 @@ iotedge::IsProgramInstalled()
 iotedge::InstallMobyEngine()
 {
   # Usage: InstallMobyEngine
-  if [ "$(iotedge::IsProgramInstalled "docker") == "true" " ]; then
+  if [ "$(iotedge::IsProgramInstalled "docker")" == "true" ]; then
     echo "Moby/Docker already available"
     echo "- Moby/Docker Version:"  
     sudo docker version 
