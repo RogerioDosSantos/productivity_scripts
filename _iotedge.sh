@@ -8,8 +8,7 @@ iotedge::InstallScriptDependencies()
   sudo apt-get update 
   sudo apt-get install -y \
     curl \
-    grep \
-    compgen \
+    grep 
   echo "Installing script dependencies ... DONE"
   return 0
 }
