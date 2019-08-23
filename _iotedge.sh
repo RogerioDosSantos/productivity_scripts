@@ -70,7 +70,7 @@ iotedge::ConfigureEdgeDevice()
 {
   # Usage: ConfigureEdgeDevice
   echo "Configuring Edge Device ..." 
-  cat /etc/iotedge/config.yaml 
+  sudo cat /etc/iotedge/config.yaml 
   echo "Configuring Edge Device ... DONE"
   return 0
 }
