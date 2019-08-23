@@ -80,8 +80,8 @@ iotedge::Bootstrap()
 {
   echo "Bootstrap"
   iotedge::InstallScriptDependencies
-  iotedge::InstallIoTEdge
-  iotedge::ConfigureEdgeDevice
+  # iotedge::InstallIoTEdge
+  # iotedge::ConfigureEdgeDevice
 }
 
 iotedge::Bootstrap
