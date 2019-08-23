@@ -17,7 +17,8 @@ iotedge::IsProgramInstalled()
 {
   # Usage: IsProgramInstalled <in:program_name>
   local in_program_name="$1"
-  local programs="$(compgen -c "${in_program_name}")"
+  # local programs="$(compgen -c "${in_program_name}")"
+  local programs="$(which "${in_program_name}")"
   if [[ "${programs}" == *"${in_program_name}"*  ]]; then
     echo "true"
     return 0
