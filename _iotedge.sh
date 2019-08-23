@@ -54,6 +54,7 @@ iotedge::InstallIoTEdge()
     echo "IoTEdge already available"
     echo "- IoTEdge Version:"  
     sudo iotedge --version 
+    return 0
   fi
   sudo echo "Installing IoTEdge ..." 
   iotedge::InstallMobyEngine
