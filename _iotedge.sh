@@ -57,11 +57,11 @@ iotedge::InstallIoTEdge()
   fi
   sudo echo "Installing IoTEdge ..." 
   iotedge::InstallMobyEngine
-  apt-get update 
-  sudo apt-get install -y \
-      iotedge 
-  echo "- IoTEdge Version:"  
-  sudo iotedge --version 
+  # apt-get update 
+  # sudo apt-get install -y \
+  #     iotedge 
+  # echo "- IoTEdge Version:"  
+  # sudo iotedge --version 
   echo "Installing IoTEdge ... DONE"
   return 0
 }
@@ -79,7 +79,7 @@ iotedge::Bootstrap()
 {
   echo "Bootstrap"
   iotedge::InstallScriptDependencies
-  # iotedge::InstallIoTEdge
+  iotedge::InstallIoTEdge
   # iotedge::ConfigureEdgeDevice
 }
 
