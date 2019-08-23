@@ -91,6 +91,7 @@ qa::AreEqual()
   log::Log "info" "5" "Expected Test File Path" "${test_file_path}"
   if [ ! -f "${test_file_path}" ]; then
     log::Log "info" "5" "Test result not found. Creating it." "${test_file_path}"
+    mkdir -p ./quality_results
     $(echo "${in_test_result}" > "${test_file_path}")
   fi
 
