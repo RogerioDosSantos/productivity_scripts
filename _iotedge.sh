@@ -78,7 +78,7 @@ iotedge::ConfigureEdgeDevice()
 iotedge::Bootstrap()
 {
   echo "Bootstrap"
-  iotedge::InstallScriptDependencies
+  # iotedge::InstallScriptDependencies
   iotedge::InstallIoTEdge
   # iotedge::ConfigureEdgeDevice
 }
