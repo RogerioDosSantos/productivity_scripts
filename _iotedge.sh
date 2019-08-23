@@ -73,11 +73,11 @@ iotedge::InstallIoTEdge()
   sudo echo "Installing IoTEdge ..." 
   iotedge::AddMicrosoftRepository
   iotedge::InstallMobyEngine
-  # apt-get update 
-  # sudo apt-get install -y \
-  #     iotedge 
-  # echo "- IoTEdge Version:"  
-  # sudo iotedge --version 
+  apt-get update 
+  sudo apt-get install -y \
+      iotedge 
+  echo "- IoTEdge Version:"  
+  sudo iotedge --version 
   echo "Installing IoTEdge ... DONE"
   return 0
 }
@@ -86,7 +86,36 @@ iotedge::ConfigureEdgeDevice()
 {
   # Usage: ConfigureEdgeDevice
   echo "Configuring Edge Device ..." 
+  echo "- Current Configuration:"
   sudo cat /etc/iotedge/config.yaml 
+  echo "- Creating new configuration:"
+  echo '#IoTEdge Configuration' > ./iotedge_config.yaml
+  echo 'provisioning:' >> ./iotedge_config.yaml
+  echo '  source: "manual"' >> ./iotedge_config.yaml
+  echo '  device_connection_string: "HostName=iotedge-services-hub-dev.azure-devices.net;DeviceId=b2c1b367-b79c-4629-82d7-787614661ed2::b7f99764-f776-456c-6ae3-08d72005ac0b;SharedAccessKey=Q0RjMNuUI9R5g3rKHwwIsL5qTppwqe823sS+OtWSHik="' >> ./iotedge_config.yaml
+  echo 'agent:' >> ./iotedge_config.yaml
+  echo '  name: "edgeAgent"' >> ./iotedge_config.yaml
+  echo '  type: "docker"' >> ./iotedge_config.yaml
+  echo '  env: {}' >> ./iotedge_config.yaml
+  echo '  config:' >> ./iotedge_config.yaml
+  echo '    image: "mcr.microsoft.com/azureiotedge-agent:1.0"' >> ./iotedge_config.yaml
+  echo '    auth: {}' >> ./iotedge_config.yaml
+  echo 'hostname: "qa-bootstrap"' >> ./iotedge_config.yaml
+  echo 'connect:' >> ./iotedge_config.yaml
+  echo '  management_uri: "unix:///var/run/iotedge/mgmt.sock"' >> ./iotedge_config.yaml
+  echo '  workload_uri: "unix:///var/run/iotedge/workload.sock"' >> ./iotedge_config.yaml
+  echo 'listen:' >> ./iotedge_config.yaml
+  echo '  management_uri: "fd://iotedge.mgmt.socket"' >> ./iotedge_config.yaml
+  echo '  workload_uri: "fd://iotedge.socket"' >> ./iotedge_config.yaml
+  echo 'homedir: "/var/lib/iotedge"' >> ./iotedge_config.yaml
+  echo 'moby_runtime:' >> ./iotedge_config.yaml
+  echo '  uri: "unix:///var/run/docker.sock"' >> ./iotedge_config.yaml
+  echo "- Updating Configuration"
+  sudo cp ./iotedge_config.yaml /etc/iotedge/config.yaml 
+  echo "- Updated Configuration:"
+  sudo cat /etc/iotedge/config.yaml 
+  echo "- Restarting IoTEdge Runtime"
+  sudo systemctl restart iotedge
   echo "Configuring Edge Device ... DONE"
   return 0
 }
@@ -94,9 +123,9 @@ iotedge::ConfigureEdgeDevice()
 iotedge::Bootstrap()
 {
   echo "Bootstrap"
-  # iotedge::InstallScriptDependencies
+  iotedge::InstallScriptDependencies
   iotedge::InstallIoTEdge
-  # iotedge::ConfigureEdgeDevice
+  iotedge::ConfigureEdgeDevice
 }
 
 iotedge::Bootstrap
