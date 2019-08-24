@@ -114,7 +114,8 @@ iotedge::ConfigureEdgeDevice()
   sudo cp ./iotedge_config.yaml /etc/iotedge/config.yaml 
   echo "- Updated Configuration:"
   sudo cat /etc/iotedge/config.yaml 
-  echo "- Restarting IoTEdge Runtime"
+  echo "- Restarting IoTEdge Runtime in 10 seconds"
+  sleep 10
   sudo systemctl restart iotedge
   echo "Configuring Edge Device ... DONE"
   return 0
