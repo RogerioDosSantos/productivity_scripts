@@ -31,7 +31,8 @@ iotedge::InstallScriptDependencies()
   sudo apt-get update 
   sudo apt-get install -y \
     curl \
-    grep 
+    grep \
+    sed
   echo "Bootstrap - Installing script dependencies ... Done"
   return 0
 }
@@ -121,44 +122,94 @@ iotedge::InstallIoTEdge()
   return 0
 }
 
-iotedge::RestartIoTEdge()
+iotedge::StopService()
 {
-	  echo "Bootstrap - Restarting IoTEdge Runtime ..."
-	  sleep 3
-	  sudo systemctl restart iotedge
-    #TODO(Roger): Identify why we needed to execute this loop and remove if unecessary
-	  local dependency_errmssg=""
-	  local rounds=0
-	  local max_rounds=10
-	  while [ $rounds -lt $max_rounds ]; do
-      local status="$(systemctl is-active iotedge)"
-      if [ "$status" == "active" ]; then 
-        segs=$max_rounds
-      else
-        sleep 3
-        sudo systemctl restart iotedge
-        if [ $rounds -gt 0 ]; then
-          dependency_errmssg="- Restarting errors can be ignored if IoTEdge status is 'active'"
-        fi
+    # Usage StopService <service_name>
+    local service_name="$1"
+	  echo "Bootstrap - Stopping ${service_name} service ..."
+	  local index=0
+	  local max_retries=10
+	  while [ $index -lt $max_retries ]; do
+      local status="$(systemctl is-active ${service_name})"
+      if [ "$status" == "inactive" ]; then 
+        echo "- Service ${service_name} stopped with success."
+        echo "Bootstrap - Stopping ${service_name} service ... Done"
+        return 0
       fi
-      let rounds++
+      echo "- Trying to stop ${service_name} service (${index} of ${max_retries})"
+      sudo systemctl stop "${service_name}"
+      sleep 3
+      let index++
 	  done
-	  echo "- IoTEdge status: $status"
-	  if [ "$status" != "active" ]; then
-      echo "- Failed to start IoTEdge Service. Please try to restat the service manually using 'sudo systemctl restart iotedge' command."
-      return 1
-	  fi
-	  echo $dependency_errmssg
-	  echo "- IoTEdge Runtime is ready."
-	  echo "Bootstrap - Restarting IoTEdge Runtime ... Done"
-	  return 0
+    echo "- Could not stop service ${service_name}."
+	  echo "Bootstrap - Stopping ${service_name} service ... Done"
+    return 1
+}
+
+iotedge::StartService()
+{
+    # Usage StartService <service_name>
+    local service_name="$1"
+	  echo "Bootstrap - Starting ${service_name} service ..."
+	  local index=0
+	  local max_retries=10
+	  while [ $index -lt $max_retries ]; do
+      local status="$(systemctl is-active ${service_name})"
+      if [ "$status" == "active" ]; then 
+        echo "- Service ${service_name} started with success."
+        echo "Bootstrap - Starting ${service_name} service ... Done"
+        return 0
+      fi
+      echo "- Trying to start ${service_name} service (${index} of ${max_retries})"
+      sudo systemctl start "${service_name}"
+      sleep 3
+      let index++
+	  done
+    echo "- Could not start service ${service_name}."
+	  echo "Bootstrap - Starting ${service_name} service ... Done"
+    return 1
+}
+
+iotedge::ConfigureServiceProperty()
+{
+  # Usage ConfigureServiceProperty <service_name> <session> <property> <value>
+  local service_name="$1"
+  local session="$1"
+  echo "Bootstrap - Configuring Proxy on the ${service_name} service ..."
+	local proxy_url="$(iotedge::GetProxyUrl)"
+  echo "- Proxy URL: ${proxy_url}"
+  local overwite_file_dir="/etc/systemd/system/${service_name}.service.d"
+  local overwite_file_path="${overwite_file_dir}/override.conf"
+  sudo  mkdir -p "${overwite_file_dir}"
+	if [[ ! -e ${overwite_file_path} ]] ; then
+		echo "- Overrride Config (override.conf) created."
+    sudo echo '[Service]' > "${overwite_file_path}"
+    sudo echo "Environment='https_proxy=${proxy_url}'" >> /etc/systemd/system/docker.service.d/override.conf
+		echo "- Overrride Config (override.conf) created."
+	fi
+	local envString="Environment"
+	if  grep -i $envString  /etc/systemd/system/docker.service.d/override.conf  ; then
+    echo "- Proxy already exists on the Overrride Config (override.conf)."
+	else	
+	fi
+	sudo systemctl daemon-reload
+	sudo systemctl restart docker
+  echo "Bootstrap - Configuring Proxy on the Moby Service ... Done"
 }
 
 iotedge::SetProxyEnvironment()
 {
   echo "Bootstrap - Setting Proxy Environment ... "
-	local proxy_url="$(iotedge::GetProxyUrl)"
-	local no_proxyUrl=".dev.wonderware.com.localhost,127.0.0.1"
+  local proxy_url="$(iotedge::GetProxyUrl)"
+	# local no_proxy=".dev.wonderware.com.localhost,127.0.0.1"
+  # echo "- HTTP Proxy: ${proxy_url}"
+  echo "- HTTPS Proxy: ${proxy_url}"
+  # echo "- No Proxy: ${no_proxy}"
+  if [[ ("${proxy_url}" != "") ]] ; then
+    echo "- No proxy configuration changed."
+    echo "Bootstrap - Setting Proxy Environment ... Done"
+    return 0
+  fi
 	local proxyString="https_proxy"
 	if  grep -i $proxyString  ~/.bashrc  ; then
 		echo "-- Proxy already exists"
@@ -169,19 +220,23 @@ iotedge::SetProxyEnvironment()
   echo "-- Current Bash Configuration:"
 	source ~/.bashrc
   echo "Bootstrap - Setting Proxy Environment ... Done"
+  return 0
 }
 
 iotedge::ConfigureProxyOnTheIoTEdgeService()
 {
   echo "Bootstrap - Configuring Proxy on the IoTEdge Service ..."
+  echo "- Current IoTEdge Service Configuration:"
+  sudo systemctl cat iotedge
 	local envString="Environment"
 	local proxy_url="$(iotedge::GetProxyUrl)"
 	if [[ ! -e /etc/systemd/system/iotedge.service.d/override.conf ]] ; then
+		echo "- Creating Overrride Config (override.conf)."
 		sudo mkdir -p /etc/systemd/system/iotedge.service.d
 		sudo touch /etc/systemd/system/iotedge.service.d/override.conf
 		echo "- Overrride Config (override.conf) created."
 	fi
-	if  grep -i $envString  /etc/systemd/system/iotedge.service.d/override.conf  ; then
+	if grep -i $envString  /etc/systemd/system/iotedge.service.d/override.conf  ; then
     echo "- Proxy already exists on the Overrride Config (override.conf)."
 	else
 		sudo echo '[Service]' > /etc/systemd/system/iotedge.service.d/override.conf
@@ -288,24 +343,17 @@ iotedge::Bootstrap()
   local device_code="$(iotedge::GetDeviceCode)"
   local device_connection_string="$(iotedge::GetConnectionString)"
   local user_instructions="$(iotedge::GetUserInstructions)"
-  local proxy_url="$(iotedge::GetProxyUrl)"
   echo "- Device Code: ${device_code}"
-  echo $proxy_url
   if [[ ("${user_instructions}" != "") ]] ; then
-    echo "Could not install/configure iotedge. Please follow the instructions below for more details:"
+    echo "- Could not install/configure iotedge. Please follow the instructions below for more details:"
     echo "${user_instructions}"
     return 1
   fi
-  if [[ ("${proxy_url}" != "") ]] ; then
-    iotedge::SetProxyEnvironment
-    iotedge::InstallScriptDependencies
-    iotedge::InstallIoTEdge
-    iotedge::ConfigureProxyOnTheIoTEdgeService
-    iotedge::ConfigureProxyOnTheMobyService
-  else
-    iotedge::InstallScriptDependencies
-    iotedge::InstallIoTEdge
-  fi
+  iotedge::SetProxyEnvironment
+  iotedge::InstallScriptDependencies
+  iotedge::InstallIoTEdge
+  iotedge::ConfigureProxyOnTheIoTEdgeService
+  iotedge::ConfigureProxyOnTheMobyService
   #iotedge::DownloadCertificates
   iotedge::ConfigureEdgeDevice "${device_connection_string}"
   iotedge::RestartIoTEdge
