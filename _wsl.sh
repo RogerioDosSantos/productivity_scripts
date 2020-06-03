@@ -23,6 +23,7 @@ wsl::InstallPrograms()
       exuberant-ctags \
       figlet \
       git \
+      git-lfs \
       graphviz \
       jq \
       m4 \
