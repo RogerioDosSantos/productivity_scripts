@@ -35,6 +35,7 @@ wsl::InstallPrograms()
       python3-bs4 \
       rsync \
       silversearcher-ag \
+      sysstat \
       tree \
       valgrind \
       vim-gtk \
