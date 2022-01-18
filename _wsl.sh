@@ -59,6 +59,7 @@ wsl::PrepareLinks()
   rm ~/roger || ln -s ${us_roger_environment_dir} ~/roger
   rm ~/temp || ln -s ~/roger/temp ~/temp
   rm ~/wiki || ln -s ~/roger/projects/wiki ~/wiki
+  rm ~/projects || ln -s ~/roger/projects ~/projects
   rm ~/.bashrc || ln -s ~/roger/devops/linux_environment/src/environment/linux/bashrc_roger ~/.bashrc
   rm ~/.editorconfig || ln -s ~/roger/devops/linux_environment/src/environment/editorconfig/editorconfig ~/.editorconfig
   rm ~/.gitconfig || ln -s ~/roger/devops/linux_environment/src/environment/git/gitconfig ~/.gitconfig
