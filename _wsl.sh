@@ -33,6 +33,8 @@ wsl::InstallPrograms()
       python-dev \
       python-pip \
       python3-bs4 \
+      python3-venv \
+      python3-pip \
       rsync \
       silversearcher-ag \
       sysstat \
